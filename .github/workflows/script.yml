@@ -3,22 +3,23 @@ name: Run Ansible Playbook
 on:
   push:
     branches:
-      - main  # Adjust the branch name as needed
+      - main # Adjust the branch name as needed
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest  # Use the appropriate operating system for your GitHub Actions
+    runs-on: ubuntu-latest # Use the appropriate operating system for your GitHub Actions
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-    - name: Run Ansible playbook on remote VM
-      uses: appleboy/ssh-action@v1.0.3
-      with:
-        host: ${{ secrets.REMOTE_HOST }}
-        username: ${{ secrets.REMOTE_USER }}
-        key: ${{ secrets.SSH_PRIVATE_KEY }}
-        script: |
-          git clone https://github.com/LucasCode812/Ansible-Individual-Project.git /home/student
-          ansible-playbook -i /home/student/Ansible-Individual-Project/inventory.yml /home/student/Ansible-Individual-Project/playbook.yml
+      - name: Run Ansible playbook on remote VM
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.REMOTE_HOST }}
+          username: ${{ secrets.REMOTE_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            git clone https://github.com/LucasCode812/Ansible-Individual-Project.git /home/student
+            ansible-playbook /home/student/Ansible-Individual-Project/playbook.yml
+        #    ansible-playbook -i /home/student/Ansible-Individual-Project/inventory.yml /home/student/Ansible-Individual-Project/playbook.yml

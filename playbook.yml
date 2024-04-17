@@ -1,0 +1,7 @@
+---
+- name: Restart all hosts
+  hosts: all
+  become: yes
+  tasks:
+    - name: Restart hosts
+      shell: shutdown -r now
