@@ -20,6 +20,8 @@ jobs:
           username: ${{ secrets.REMOTE_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            git clone https://github.com/LucasCode812/Ansible-Individual-Project.git /home/student
-            ansible-playbook /home/student/Ansible-Individual-Project/playbook.yml
-        #    ansible-playbook -i /home/student/Ansible-Individual-Project/inventory.yml /home/student/Ansible-Individual-Project/playbook.yml
+            cd /home/student
+            git clone https://github.com/LucasCode812/Ansible-Individual-Project.git
+            cd Ansible-Individual-Project
+            ansible-playbook playbook.yml
+        #    ansible-playbook -i inventory.yml playbook.yml
