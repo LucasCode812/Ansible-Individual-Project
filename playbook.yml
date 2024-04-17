@@ -1,7 +1,13 @@
 ---
-- name: Restart all hosts
+- name: Update and Upgrade Ubuntu 22.04
   hosts: all
-  become: yes
+  become: true
   tasks:
-    - name: Restart hosts
-      shell: shutdown -r now
+    - name: Update package lists
+      apt:
+        update_cache: yes
+
+    - name: Upgrade all packages
+      apt:
+        upgrade: yes
+        autoclean: yes
