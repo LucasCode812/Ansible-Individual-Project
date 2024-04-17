@@ -3,11 +3,11 @@ name: Run Ansible Playbook
 on:
   push:
     branches:
-      - main # Adjust the branch name as needed
+      - main
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest # Use the appropriate operating system for your GitHub Actions
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
