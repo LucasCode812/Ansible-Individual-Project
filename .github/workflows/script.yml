@@ -13,10 +13,16 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Remove existing folder and clone repository
-        run: |
-          sudo rm -rf /home/student/Ansible-Individual-Project
-          git clone https://github.com/LucasCode812/Ansible-Individual-Project.git /home/student/Ansible-Individual-Project
+    - name: Remove existing folder and clone repository
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.REMOTE_HOST }}
+          username: ${{ secrets.REMOTE_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            sudo rm -rf /home/student/Ansible-Individual-Project
+            cd /home/student
+            git clone https://github.com/LucasCode812/Ansible-Individual-Project.git
 
       - name: Install Wazuh on Environment
         uses: appleboy/ssh-action@v1.0.3
