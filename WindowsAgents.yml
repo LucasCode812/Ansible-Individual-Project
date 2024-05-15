@@ -8,9 +8,10 @@
 
   tasks:
     - name: Run PowerShell command to install Wazuh Agent
-      win_shell: |
-        $uri = "https://packages.wazuh.com/4.x/windows/wazuh-agent-4.7.4-1.msi"
-        $outFile = "${env:tmp}\wazuh-agent.msi"
-        Invoke-WebRequest -Uri $uri -OutFile $outFile
-        msiexec.exe /i $outFile /quiet WAZUH_MANAGER='172.16.2.100' WAZUH_AGENT_GROUP='WindwowsAgents' WAZUH_AGENT_NAME='{{ inventory_hostname }}' WAZUH_REGISTRATION_SERVER='172.16.2.100'
-        NET START WazuhSvc
+      ansible.windows.win_powershell:
+        script: |
+          $uri = "https://packages.wazuh.com/4.x/windows/wazuh-agent-4.7.4-1.msi"
+          $outFile = "${env:tmp}\wazuh-agent.msi"
+          Invoke-WebRequest -Uri $uri -OutFile $outFile
+          msiexec.exe /i $outFile /quiet WAZUH_MANAGER='172.16.2.100' WAZUH_AGENT_GROUP='WindwowsAgents' WAZUH_AGENT_NAME='{{ inventory_hostname }}' WAZUH_REGISTRATION_SERVER='172.16.2.100'
+          NET START WazuhSvc

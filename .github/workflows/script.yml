@@ -1,6 +1,5 @@
 name: Run Ansible Playbook
 
-#test
 on:
   push:
     branches:
@@ -14,16 +13,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Clone Ansible Playbooks to VM
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.REMOTE_HOST }}
-          username: ${{ secrets.REMOTE_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: |
-            cd /home/student
-            sudo rm -r Ansible-Individual-Project
-            git clone https://github.com/LucasCode812/Ansible-Individual-Project.git
+      - name: Remove existing folder and clone repository
+        run: |
+          sudo rm -rf /home/student/Ansible-Individual-Project
+          git clone https://github.com/LucasCode812/Ansible-Individual-Project.git /home/student/Ansible-Individual-Project
 
       - name: Install Wazuh on Environment
         uses: appleboy/ssh-action@v1.0.3
