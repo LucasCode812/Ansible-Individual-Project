@@ -21,7 +21,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           command_timeout: 200m
           script: |
-            sudo rm -rf /home/student/Ansible-Individual-Project
+            rm -rf /home/student/Ansible-Individual-Project
             cd /home/student
             git clone https://github.com/LucasCode812/Ansible-Individual-Project.git
 
