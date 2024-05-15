@@ -50,3 +50,29 @@
         /var/ossec/bin/agent_groups -a -g WindwowsAgents -q
       run_once: true
       delegate_to: WazuhManager-Node01
+
+    - name: Copy ossec.conf to WazuhManager-Node01
+      copy:
+        src: /home/student/ossec.conf
+        dest: /var/ossec/etc/ossec.conf
+      run_once: true
+      delegate_to: WazuhManager-Node01
+
+    - name: Copy ossec.conf to WazuhManager-Node02
+      copy:
+        src: /home/student/ossec.conf
+        dest: /var/ossec/etc/ossec.conf
+      run_once: true
+      delegate_to: WazuhManager-Node02
+
+    - name: Restart WazuhManager-Node01
+      shell: >
+        systemctl restart wazuh-manager
+      run_once: true
+      delegate_to: WazuhManager-Node01
+
+    - name: Restart WazuhManager-Node02
+      shell: >
+        systemctl restart wazuh-manager
+      run_once: true
+      delegate_to: WazuhManager-Node02
