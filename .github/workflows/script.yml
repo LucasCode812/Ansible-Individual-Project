@@ -1,6 +1,5 @@
 name: Run Ansible Playbook
 
-# test
 on:
   push:
     branches:
@@ -31,7 +30,7 @@ jobs:
           host: ${{ secrets.REMOTE_HOST }}
           username: ${{ secrets.REMOTE_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          timeout: 30
+          command_timeout: 200m
           script: |
             cd /home/student/Ansible-Individual-Project
             ansible-playbook -i /etc/ansible/hosts WazuhInstall.yml -v
@@ -42,7 +41,7 @@ jobs:
           host: ${{ secrets.REMOTE_HOST }}
           username: ${{ secrets.REMOTE_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          timeout: 30
+          command_timeout: 200m
           script: |
             cd /home/student/Ansible-Individual-Project
             ansible-playbook -i /etc/ansible/hosts WazuhClusterAgents.yml -v
@@ -53,7 +52,7 @@ jobs:
           host: ${{ secrets.REMOTE_HOST }}
           username: ${{ secrets.REMOTE_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          timeout: 30
+          command_timeout: 200m
           script: |
             cd /home/student/Ansible-Individual-Project
             ansible-playbook -i /etc/ansible/hosts WindowsAgents.yml -v
@@ -64,7 +63,7 @@ jobs:
           host: ${{ secrets.REMOTE_HOST }}
           username: ${{ secrets.REMOTE_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          timeout: 30
+          command_timeout: 200m
           script: |
             cd /home/student/Ansible-Individual-Project
             ansible-playbook -i /etc/ansible/hosts LinuxAgents.yml -v
