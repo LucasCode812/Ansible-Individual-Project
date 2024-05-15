@@ -13,7 +13,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Run Ansible playbook on remote VM
+      - name: Clone Ansible Playbooks to VM
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.REMOTE_HOST }}
@@ -21,7 +21,45 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             cd /home/student
+            sudo rm -r Ansible-Individual-Project
             git clone https://github.com/LucasCode812/Ansible-Individual-Project.git
-            cd Ansible-Individual-Project
-            ansible-playbook playbook.yml
-        #    ansible-playbook -i inventory.yml playbook.yml
+
+      - name: Install Wazuh on Environment
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.REMOTE_HOST }}
+          username: ${{ secrets.REMOTE_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd /home/student/Ansible-Individual-Project
+            ansible-playbook -i /etc/ansible/hosts WazuhInstall.yml -v
+
+      - name: Install Wazuh Agents on Wazuh Cluster
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.REMOTE_HOST }}
+          username: ${{ secrets.REMOTE_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd /home/student/Ansible-Individual-Project
+            ansible-playbook -i /etc/ansible/hosts WazuhClusterAgents.yml -v
+
+      - name: Install Wazuh Agents on Windows Hosts
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.REMOTE_HOST }}
+          username: ${{ secrets.REMOTE_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd /home/student/Ansible-Individual-Project
+            ansible-playbook -i /etc/ansible/hosts WindowsAgents.yml -v
+
+      - name: Install Wazuh Agents on Linux Hosts
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.REMOTE_HOST }}
+          username: ${{ secrets.REMOTE_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd /home/student/Ansible-Individual-Project
+            ansible-playbook -i /etc/ansible/hosts LinuxAgents.yml -v

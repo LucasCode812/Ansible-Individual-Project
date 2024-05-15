@@ -1,0 +1,52 @@
+---
+- name: Install Wazuh on multiple nodes
+  hosts: wazuh-cluster
+  become: yes
+  tasks:
+    - name: Download Wazuh installer script on all nodes
+      get_url:
+        url: 'https://packages.wazuh.com/4.7/wazuh-install.sh'
+        dest: '/tmp/wazuh-install.sh'
+
+    - name: Run Wazuh installer script on I-node01
+      shell: '/bin/bash /tmp/wazuh-install.sh --wazuh-indexer node-1'
+      run_once: true
+      delegate_to: WazuhIndexer-Node01
+
+    - name: Run Wazuh installer script on I-node02
+      shell: '/bin/bash /tmp/wazuh-install.sh --wazuh-indexer node-2'
+      run_once: true
+      delegate_to: WazuhIndexer-Node02
+
+    - name: Run Wazuh installer script on I-node03
+      shell: '/bin/bash /tmp/wazuh-install.sh --wazuh-indexer node-3'
+      run_once: true
+      delegate_to: WazuhIndexer-Node03
+
+    - name: Start Wazuh indexing cluster on I-node01
+      shell: '/bin/bash /tmp/wazuh-install.sh --start-cluster'
+      run_once: true
+      delegate_to: WazuhIndexer-Node01
+
+    - name: Run Wazuh installer script on M-node01
+      shell: '/bin/bash /tmp/wazuh-install.sh --wazuh-server wazuh-1'
+      run_once: true
+      delegate_to: WazuhManager-Node01
+
+    - name: Run Wazuh installer script on M-node02
+      shell: '/bin/bash /tmp/wazuh-install.sh --wazuh-server wazuh-2'
+      run_once: true
+      delegate_to: WazuhManager-Node02
+
+    - name: Run Wazuh installer script on D-node01
+      shell: '/bin/bash /tmp/wazuh-install.sh --wazuh-dashboard dashboard'
+      run_once: true
+      delegate_to: WazuhDashboard-Node01
+
+    - name: Run Wazuh installer scripts on D-node01
+      shell: >
+        /var/ossec/bin/agent_groups -a -g WazuhCluster -q &&
+        /var/ossec/bin/agent_groups -a -g LinuxAgents -q &&
+        /var/ossec/bin/agent_groups -a -g WindwowsAgents -q
+      run_once: true
+      delegate_to: WazuhManager-Node01
