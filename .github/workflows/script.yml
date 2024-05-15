@@ -30,6 +30,7 @@ jobs:
           host: ${{ secrets.REMOTE_HOST }}
           username: ${{ secrets.REMOTE_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
+          timeout-minutes: 30
           script: |
             cd /home/student/Ansible-Individual-Project
             ansible-playbook -i /etc/ansible/hosts WazuhInstall.yml -v
@@ -40,6 +41,7 @@ jobs:
           host: ${{ secrets.REMOTE_HOST }}
           username: ${{ secrets.REMOTE_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
+          timeout-minutes: 30
           script: |
             cd /home/student/Ansible-Individual-Project
             ansible-playbook -i /etc/ansible/hosts WazuhClusterAgents.yml -v
@@ -50,6 +52,7 @@ jobs:
           host: ${{ secrets.REMOTE_HOST }}
           username: ${{ secrets.REMOTE_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
+          timeout-minutes: 30
           script: |
             cd /home/student/Ansible-Individual-Project
             ansible-playbook -i /etc/ansible/hosts WindowsAgents.yml -v
@@ -60,6 +63,7 @@ jobs:
           host: ${{ secrets.REMOTE_HOST }}
           username: ${{ secrets.REMOTE_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
+          timeout-minutes: 30
           script: |
             cd /home/student/Ansible-Individual-Project
             ansible-playbook -i /etc/ansible/hosts LinuxAgents.yml -v
