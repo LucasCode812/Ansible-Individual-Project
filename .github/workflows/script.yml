@@ -13,12 +13,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-    - name: Remove existing folder and clone repository
+      - name: Remove Dir and Clone Git
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.REMOTE_HOST }}
           username: ${{ secrets.REMOTE_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
+          command_timeout: 200m
           script: |
             sudo rm -rf /home/student/Ansible-Individual-Project
             cd /home/student
